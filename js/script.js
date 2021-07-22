@@ -34,9 +34,11 @@ function fecthdata(url)
 {
     fetch(url)
     .then(function(data){
-        console.log(data);
-        return data;
+       return data.json();
     })
+    .then(function(data){
+       console.log(data);
+     })
 }
 fecthdata();
 
