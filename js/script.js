@@ -29,6 +29,18 @@ var Truckicon = L.icon({
     
 });
 
+var url = "https://gps.loglag.com/v2/orders/123456789";
+function fecthdata(url)
+{
+    fetch(url)
+    .then(function(data){
+        console.log(data);
+        return data;
+    })
+}
+fecthdata();
+
+
 var startMarker = L.marker([20.9373413,106.3145542], {icon: StartIcon}).addTo(mymap).bindPopup("Điểm bắt đầu:<br>Hải Dương, Hai Duong, Vietnam");
 var EndMarker = L.marker([10.8694261,106.728362], {icon: EndIcon}).addTo(mymap).bindPopup("Điểm kết thúc:<br>Chợ đầu mối nông sản Thủ Đức, Quốc lộ 1A, Tam Bình, Thủ Đức, Ho Chi Minh City, Vietnam");
 var TruckMarker = L.marker([10.811112832744,106.66910482636], {icon: Truckicon}).addTo(mymap).bindPopup("Vị trí xe hiện tại:<br>Họ và tên: Nguyễn Văn A <br> Số xe: 49-H5 123456");
