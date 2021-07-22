@@ -1,0 +1,280 @@
+/* Reset */
+*{ 
+    margin: 0;
+    padding: 0;
+    border: 0;
+    
+   }
+
+
+#mapid {height: 100vh; }
+.cover-map{ 
+   
+}
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #d95525;
+    z-index: 10000;
+}
+
+.navbar-leftxx{
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 38px;
+    padding-left: 10px;
+    width: 260px;
+    background-color: #d95525;
+    clip-path: polygon(25% 0%, 100% 0%, 54% 100%, 0 99%, 0 0);
+  
+
+}
+
+.navbar-rightxx{
+    position: absolute;
+    top: 15px;
+    right: 0;
+    height: 38px;
+    width: 360px;
+    background-color: #d95525;
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 34% 100%, 0 0);
+
+ 
+   
+}
+
+.cover-navbar-tools{
+    padding-left: 120px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.img-logo{
+    height: 70%;
+}
+
+.navbar-icon{
+    color: white;
+    position: relative;
+   
+}
+.navbar-icon:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+
+.cover-quocky{
+    width: 35px;
+    height: 30px;
+    padding: 0 2px ;
+    background-color: #f9f9f9;
+    border: 1px solid #d9d9d9;
+}
+
+.data-detail{
+    position: fixed;
+    top: 16%;
+    bottom: 0;
+    left: 0;
+    width: 350px;
+    background-color: white;
+    z-index: 10000;
+    transition: left .7s ;
+   
+}
+
+
+
+.data-title{
+    transform: translateY(25%);
+    font-size: 13px;
+}
+.cover-title{
+    background-color: #eee;
+    cursor: pointer;
+}
+/* Cái này để tạo hàng rào bao quanh 2 bên của Thông tin đơn hàng  */
+.cover-title:nth-child(2){
+    border-left: .5px solid #b9c0c7;
+    border-right: .5px solid #b9c0c7;
+}
+.cover-title:hover{
+    background-color: white;
+}
+
+.active{
+    background-color: white;
+    border-bottom: 3px solid #1b99bd;
+    
+}
+/* button display data on left */
+.btn-display-data{  
+    position: absolute;
+    right: -30px;
+    top: 12%;
+    z-index: 100000000;
+    width: 30px;
+    height: 80px;
+    clip-path: polygon(0 0, 100% 36%, 100% 63%, 0% 100%);
+    background-color: #f9f9f9;
+}
+.icon-display-data{
+    transform: translate(70%,156%);
+     color: #ababab;
+     z-index: 10000000;
+}
+
+
+/* Tab Hành trình */
+.data-Journeys{
+    margin-top: 6%;
+    margin-left: 1.8rem ;
+
+}
+.cover-data-Journeys{
+    width: 100%;
+} 
+/* List data journeys */
+.list-cover-data-Journeys{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+ .list-cover-data-Journeys-item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+    margin-right: 10px;
+
+    /* background-color: red; */
+}
+.current-stage{
+    color: white !important;
+    background-color: green;
+}
+.Journey-text{
+    margin-left: 12px;
+    padding-right: 20px;
+}
+.number-stage{
+    border-radius: 50%;
+    border: 1px solid green;
+    position: relative;
+    color:  green;
+}
+.arrow-down{
+    position: absolute;
+    top: 120%;
+    left: 32%;
+    transform: scale(1,1.5);
+    color: grey;
+}
+/* End list data Hành trình */
+/* Tab   Thông tin đơn hàng  */
+
+.data-infomation-order{
+    margin: 4% 6%;
+}
+
+.cover-data-infomation-order{
+   
+   
+}
+.list-item-infomation-order{
+    padding:5.3px 0;
+    padding-left: 10px;
+    margin: 0;
+    margin-bottom: 34px;
+    background: #f4f5f7;
+    border-radius: 2px;
+   display:flex;
+     align-items: baseline;
+   
+}
+.cover-title-order{
+    display: flex;
+    align-items: center;
+    
+}
+.order-data{
+    margin-left: 6px ;
+    font-size: 16px;
+}
+.order-icon{
+    font-size: 21px;
+    margin-right: 8px;
+
+}
+.list-cover-order-data{
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    margin-left: -10px;
+}
+/* End tab Thông tin đơn hàng */
+/* Tab Drive  */
+.data-driver{
+    margin: 4% 6%;
+}
+/* End  Tab Drive */
+/* Social-netWork */
+ .Social-Network{
+    position: fixed;
+    top: 26%;
+    right: 10px;
+    z-index: 1000000;
+   
+   
+   
+}
+.listicons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px !important;
+}
+
+.icon-link {
+    background-color: black;
+    border: 1px solid rgb(255, 255, 255);
+
+    /* dua icon vao giua */
+    display: grid;
+    place-content: center;
+    width: 40px;
+    height: 40px;
+
+    text-decoration: none;
+    transition: .4s;
+}
+
+.icon-link:hover {
+    background-color: #d95525;
+    transition: .4s;
+}
+
+/* select cai dau tien */
+.icon-link:first-of-type {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+/* select cai cuoi cung */
+.icon-link:last-of-type {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.custom-icon{
+    padding: 5px 3px;
+}
+
+.custom-icon::before, .custom-icon::after {
+    width: 16px;
+    height: 16px;
+    color: #fff;
+}

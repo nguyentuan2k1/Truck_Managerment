@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="14px" viewBox="0 0 10 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>map pointer</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cont_2b" transform="translate(-39.000000, -142.000000)" fill="#F15F2A" fill-rule="nonzero">
+            <g id="Group-5" transform="translate(33.000000, 89.000000)">
+                <g id="Group-8" transform="translate(4.000000, 6.000000)">
+                    <path d="M7,47 C4.24298511,47 2,49.2745106 2,52.0702484 C2,55.5398463 6.47451018,60.633419 6.66501642,60.8485598 C6.84395476,61.0506577 7.15636881,61.0503023 7.33498358,60.8485598 C7.52548982,60.633419 12,55.5398463 12,52.0702484 C11.9999461,49.2745106 9.75698793,47 7,47 Z M7,54.6212319 C5.6128773,54.6212319 4.48440087,53.4768673 4.48440087,52.0702484 C4.48440087,50.6636295 5.61290427,49.5192921 7,49.5192921 C8.38709573,49.5192921 9.51557217,50.6636568 9.51557217,52.0702757 C9.51557217,53.4768946 8.38709573,54.6212319 7,54.6212319 Z" id="map-pointer"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

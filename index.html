@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/473ccb2a41.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+</head>
+
+<body>
+
+
+
+    <div class="cover-map">
+        <div class="navbar">
+            <div class="navbar-leftxx">
+                <img class="img-fluid img-logo" src="img/761a74ea6b509f0ec641.jpg" alt="" srcset="">
+            </div>
+            <div class="navbar-rightxx">
+                <div class="cover-navbar-tools">
+
+                    <i class="navbar-icon fas fa-wrench"></i>
+
+
+                    <i class=" navbar-icon fas fa-cog"></i>
+                    <i class="navbar-icon far fa-comments"></i>
+                    <i class="navbar-icon far fa-user"></i>
+                    <div class="cover-quocky navbar-icon">
+                        <img class="img-fluid " src="img/covn.svg.png" alt="" srcset="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-detail ">
+
+            <div class="btn-display-data">
+                <i class="icon-display-data fas fa-chevron-left"></i>
+            </div>
+
+
+            <div style="display: flex;  ">
+                <div class="col-md-4 cover-title active ">
+                    <p class="data-title text-center">Hành Trình</p>
+
+                </div>
+                <div class="col-md-4 cover-title ">
+                    <p class="data-title text-center">Thông Tin Đơn Hàng</p>
+                </div>
+                <div class="col-md-4 cover-title ">
+                    <p class="data-title text-center">Tài xế</p>
+                </div>
+
+            </div>
+
+            <div style="display: block;" class="data-Journeys">
+                <div class="cover-data-Journeys">
+                    <ul class="list-cover-data-Journeys">
+                        <li class="list-cover-data-Journeys-item">
+                            <span class="number-stage col-md-1 text-center "> 1 <i
+                                    class="arrow-down fas fa-long-arrow-alt-down"></i> </span>
+                            <span class="Journey-text col-md-11 ">Chờ thực hiện</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: none;" class="data-infomation-order">
+                <div class="cover-data-infomation-order">
+                    <p style="margin-bottom: 26px;" class="text-center "> <i style="font-size: 42px; color: #d95525; "
+                            class="fas fa-cubes"></i> </p>
+                    <ul class="list-cover-order-data">
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-cubes order-icon "></i> <span> Mã
+                                    đơn hàng: </span> </div>
+                            <span class="col-md-7 order-data " id="Order-id"> BTC-1234567 </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-location-arrow order-icon"></i>
+                                <span> Điểm đi: </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="Order-point-of-departure"> BTC-1234567 </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-map-marker-alt order-icon"></i>
+                                <span> Điểm đến: </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="Order-destination"> BTC-1234567 </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-user-tie order-icon"></i> <span>
+                                    Chủ hàng: </span> </div>
+                            <span class="col-md-7 order-data" id="Order-boss"> BTC-1234567 </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-truck-moving order-icon"></i>
+                                <span> Chủ xe: </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="Order-drive"> BTC-1234567 </span>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div style="display: none;" class="data-driver">
+                <div class="cover-data-infomation-order">
+                    <p style="margin-bottom: 26px;" class="text-center "> <i style="font-size: 42px; color: #d95525; "
+                            class="far fa-user"></i> </p>
+                    <ul class="list-cover-order-data">
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="far fa-address-card order-icon "></i>
+                                <span> Họ và tên : </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="drive-name"> Nguyễn văn C </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-phone-square-alt order-icon"></i>
+                                <span> Điện Thoại </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="drive-phone"> </span>
+                        </li>
+                        <li class="list-item-infomation-order">
+                            <div class="col-md-5 cover-title-order "> <i class="fas fa-truck-moving order-icon"></i>
+                                <span> Số Xe: </span>
+                            </div>
+                            <span class="col-md-7 order-data" id="dirve-car-number"> </span>
+                        </li>
+
+
+
+                    </ul>
+                  
+                    
+                </div>
+            </div>
+
+
+        </div>
+        <div class="Social-Network">
+            <div class="listicons">
+                <a class="icon-link" href="https://www.facebook.com/Loglagvn/">
+                    <i class="brand-icon fab fa-facebook-f custom-icon"></i>
+                </a>
+                <a class="icon-link" href="https://twitter.com/loglag.vn/">
+                    <i class="brand-icon fab fa-twitter custom-icon"></i>
+                </a>
+                <a class="icon-link" href="#">
+                    <i class="brand-icon fab fa-vimeo-v custom-icon"></i>
+                </a>
+                <a class="icon-link" href="#">
+                    <i class="brand-icon  fab fa-linkedin-in custom-icon"></i>
+                </a>
+                <a class="icon-link" href="https://www.instagram.com/loglag.vn/">
+                    <i class="brand-icon fab fa-instagram custom-icon"></i>
+                </a>
+                <a class="icon-link" href="https://www.youtube.com/channel/UC-6vKl12rWC22HP-YP6t9Hw">
+                    <i class="brand-icon fab fa-youtube custom-icon"></i>
+                </a>
+            </div>
+             <div style="position:  relative;top:160px; right: -10px !important;" class="cover-zalo-icon">
+                <iframe frameborder="0" allowfullscreen="" scrolling="no" width="70" height="70"
+                src="https://sp.zalo.me/plugins/chat-widget?position=null&amp;oaid=3813673506477520746&amp;welcomemessage=R%E1%BA%A5t%20vui%20khi%20%C4%91%C6%B0%E1%BB%A3c%20h%E1%BB%97%20tr%E1%BB%A3%20b%E1%BA%A1n!&amp;autopopup=0&amp;width=350&amp;height=420&amp;style=2&amp;id=ecf8da11-e726-4741-9d1c-d60dce99f8a8&amp;domain=loglag.com&amp;android=false&amp;ios=false"
+                style="position: absolute; bottom: 0px; right: 0px;"></iframe>
+             </div>
+        </div>
+    </div>
+
+    <div id="mapid"></div>
+
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+  
+</body>
+
+</html>

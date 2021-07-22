@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 13</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="11" cy="11" r="11"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Web-App_Hang-tim-xe(1)" transform="translate(-345.000000, -927.000000)">
+            <g id="Group-85" transform="translate(320.000000, 800.000000)">
+                <g id="Group-13" transform="translate(26.000000, 128.000000)">
+                    <g id="Group-95">
+                        <g id="Group-5">
+                            <g id="Group-20">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <use id="Oval" stroke="#F15F2A" stroke-width="1.5" fill="#FFFFFF" xlink:href="#path-1"></use>
+                            </g>
+                        </g>
+                    </g>
+                    <path d="M15.4962392,8.90993789 L15.4880628,8.74534161 C15.1466989,6.62111801 13.2681754,5 11.0028068,5 C8.65107525,5 6.73269187,6.75776398 6.50017604,8.99792961 L6.50017604,9.07349896 C6.46747052,12.9725673 11.0028068,18 11.0038289,18 C11.0038289,17.9994824 15.6505683,12.8343685 15.4962392,8.90993789 Z M10.9987186,11.757764 C9.77583865,11.757764 8.78394144,10.75 8.78394144,9.51035197 C8.78394144,8.27173913 9.77583865,7.26397516 10.9987186,7.26397516 C12.2241537,7.26397516 13.2165619,8.27173913 13.2165619,9.51035197 C13.2165619,10.75 12.2241537,11.757764 10.9987186,11.757764 Z" id="Shape" fill="#F15F2A"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
