@@ -1,7 +1,7 @@
 var mymap = L.map('mapid').setView([16.0669077, 108.2137987], 6);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGVvdmFubWVveHgiLCJhIjoiY2tyNHRpdW53Mno0MDJ2bzhzZXU2OXZhdSJ9.z9bdsi-GlnxmToSg5njRcA', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-   //  maxZoom: 10,
+      maxZoom: 18,
     //  zoom:-2,
     id: 'mapbox/streets-v11',
     tileSize: 512,
@@ -11,8 +11,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 
 
-// var polyline = L.polyline(latlong, { color: 'red' }).addTo(mymap);
-// mymap.fitBounds(polyline.getBounds());
+
+
 
 var StartIcon = L.icon({
     iconUrl: 'img/location.svg',
@@ -26,6 +26,10 @@ var Truckicon = L.icon({
     iconUrl: 'img/truck-tracking.svg',
 
 });
+var fromToPolyline;
+var polylineisChoose;
+
+
 
 var url = "https://gps.loglag.com/v2/orders/123456789";
 fetch(url)
@@ -33,28 +37,39 @@ fetch(url)
         return data.json();
     })
     .then(function (data) {
-        console.log(data);
         let data_root = data.data;
-        console.log(data_root);
-        var startMarker = L.marker([data_root.from_place.lat,data_root.from_place.long], { icon: StartIcon }).addTo(mymap).bindPopup(data_root.from_place.type+":<br>"+data_root.from_place.address);
-        var EndMarker = L.marker([data_root.to_place[0].lat,data_root.to_place[0].long], { icon: EndIcon }).addTo(mymap).bindPopup(data_root.to_place[0].type+":<br>"+data_root.to_place[0].address);
-        var polyline = L.polyline([[data_root.from_place.lat,data_root.from_place.long],[data_root.to_place[0].lat,data_root.to_place[0].long]], {color: '#d95525'}).addTo(mymap);
+        var startMarker = L.marker([data_root.from_place.lat, data_root.from_place.long], { icon: StartIcon }).addTo(mymap).bindPopup(data_root.from_place.type + ":<br>" + data_root.from_place.address);
+        var EndMarker = L.marker([data_root.to_place[0].lat, data_root.to_place[0].long], { icon: EndIcon }).addTo(mymap).bindPopup(data_root.to_place[0].type + ":<br>" + data_root.to_place[0].address);
+        var polyline = L.polyline([[data_root.from_place.lat, data_root.from_place.long], [data_root.to_place[0].lat, data_root.to_place[0].long]], { color: '#d95525' }).addTo(mymap);
+        fromToPolyline = polyline;
         mymap.fitBounds(polyline.getBounds());
-        
         var order_infomation_data = {
-            order_id : data_root.booking_code,
-            Order_point_of_departure : data_root.from_place.address,
-            Order_destination : data_root.to_place[0].address,
-            Order_boss :  data_root.owner_name,
-            Order_drive : GetDriverFromRootData(data_root)
+            order_id: data_root.booking_code,
+            Order_point_of_departure: data_root.from_place.address,
+            Order_destination: data_root.to_place[0].address,
+            Order_boss: data_root.owner_name,
+            Order_drive: GetDriverFromRootData(data_root)
         }
         Fill_order_infomation_data(order_infomation_data);
+       
         createCarFollowData(data_root.vehicles);
+      
+        // for(i in mymap._layers) {
+        //     if(mymap._layers[i]._path != undefined) {
+        //         try {
+        //             mymap.removeLayer(mymap._layers[i]);
+        //         }
+        //         catch(e) {
+        //             console.log("problem with " + e + mymap._layers[i]);
+        //         }
+        //     }
+        // }
+        // console.log(mymap);
+
     })
-.catch((error)=>
-{
-    alert("Error"+error);
-});
+    .catch((error) => {
+        alert("Error" + error);
+    });
 
 
 
@@ -125,8 +140,8 @@ all_tab.forEach(element => {
             document.querySelector('.data-driver').style.display = 'none';
             document.querySelector('.data-infomation-order').style.display = 'block';
             element.classList.add('active');
-           
-         
+
+
 
         }
         else if (title == 'Tài xế') {
@@ -150,7 +165,7 @@ all_tab.forEach(element => {
             document.querySelector('.data-infomation-order').style.display = 'none';
             document.querySelector('.data-driver').style.display = 'none';
             document.querySelector('.data-Journeys').style.display = 'block';
-           // Filldata_Journey(datamau, 2);
+            // Filldata_Journey(datamau, 2);
             element.classList.add('active');
 
 
@@ -179,7 +194,6 @@ function Fill_order_infomation_data(order_infomation_data) {
 }
 
 
-// Dữ liệu mẫu Driver
 
 // Hàm đổ dữ liệu cho driver
 function Fill_dirver_data(driver_data) {
@@ -192,49 +206,107 @@ function Fill_dirver_data(driver_data) {
 }
 
 // Lấy dữ liệu người lái xe từ dữ liệu gốc
-function GetDriverFromRootData(Rootdata)
-{
+function GetDriverFromRootData(Rootdata) {
     let array_driver = Rootdata.vehicles;
-    let driver_name ="";
-    array_driver.forEach((element,i)=>{
-        if((i+1)==array_driver.length)
-        {
-            driver_name +=element.driver;
+    let driver_name = "";
+    array_driver.forEach((element, i) => {
+        if ((i + 1) == array_driver.length) {
+            driver_name += element.driver;
         }
-        else
-        {
-            driver_name +=element.driver+",";
+        else {
+            driver_name += element.driver + ",";
         }
-       
     })
-     
-    return driver_name ;
+
+    return driver_name;
 }
+
+// Test 
+
+
 
 // tạo xe theo dữ liệu
 function createCarFollowData(array_vehicles) {
-   
 
-    array_vehicles.forEach((element,i) => {
-       // console.log(element);
+
+    array_vehicles.forEach((element, i) => {
         // gán vị trí tài xế
-         const marker = L.marker([element.positions[length-1].latitude,element.positions[length-1].longitude], { icon: Truckicon, driver: {name: element.driver, number_plate: element.number_plate } })
-        .addTo(mymap)
-        .bindPopup("Vị trí xe hiện tại:<br>Họ và tên:" + element.driver + "<br> Số xe:" + element.number_plate + "");
-       
+
+
+        let array_position = [];
+        element.positions.forEach((obj_position) => {
+            array_position.push(Object.values(obj_position));
+        })
+        let marker = L.marker([element.positions[0].latitude, element.positions[0].longitude], { icon: Truckicon, driver: { name: element.driver, number_plate: element.number_plate } })
+            .addTo(mymap)
+            .bindPopup("Vị trí xe hiện tại:<br>Họ và tên:" + element.driver + "<br> Số xe:" + element.number_plate + "");
+        let polyline = L.polyline(array_position, { color: 'transparent' }).addTo(mymap);
+        marker.addEventListener('preclick',()=>{
+            if(polylineisChoose !=undefined)
+            {
+                polylineisChoose.setStyle({
+                    color: 'transparent'
+                });
+
+                fromToPolyline.setStyle({
+                    color: 'transparent'
+                });
+
+            }
+           
+        })
+
+
         marker.addEventListener(('click'), () => {
-            
-            // console.log(datalumduoc);
             let driver_data = {
                 drive_name: array_vehicles[i].driver,
                 drive_phone: array_vehicles[i].phone_number,
                 dirve_car_number: array_vehicles[i].number_plate
             };
-            
             Fill_dirver_data(driver_data);
-            let array_journey_data  = element.status;
+            let array_journey_data = element.status;
             Filldata_Journey(array_journey_data);
+           if(mymap.getZoom()<=12)
+           {
+            mymap.flyToBounds(polyline.getBounds(), { 'duration': 1.6 });
+            setTimeout(()=>{
+                polyline.setStyle({
+                    color: '#d95525'
+                });
+                fromToPolyline.setStyle({
+                  color: '#d95525'
+              });
+            },1600);
+           }
+           else if(mymap.getZoom()>12 && mymap.getZoom()<=15)
+           {
+            mymap.flyToBounds(polyline.getBounds(), { 'duration': 0.7 });
+            setTimeout(()=>{
+                polyline.setStyle({
+                    color: '#d95525'
+                });
+                fromToPolyline.setStyle({
+                  color: '#d95525'
+              });
+            },1000);
+           }
+           else if(mymap.getZoom()>=16)
+           {
+            mymap.flyToBounds(polyline.getBounds(), { 'duration': 0.4 });
+            setTimeout(()=>{
+              polyline.setStyle({
+                  color: '#d95525'
+              });
+              fromToPolyline.setStyle({
+                color: '#d95525'
+            });
+            },700);
+           }
+           polylineisChoose = polyline;
+          
+            
         })
+
 
 
     })
