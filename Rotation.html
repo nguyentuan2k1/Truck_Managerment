@@ -1,0 +1,44 @@
+<html>
+<head>
+    <style>
+    </style>
+</head>
+<body>
+    <html>
+<p>GPS 1: 18.3083442,105.8859573<p>
+<p>GPS 2: 18.3021864,105.8920935<p>
+<p id="rotation">Rotation : </p>
+<p> Hình Gốc
+<img id="truck-origin"  src="img/truck-tracking.svg">
+</p>
+<p>Hình sau khi tính Góc tọa độ giũa 2 điểm
+<img id="truck-rotation"  src="img/truck-tracking.svg">
+</p>
+</html>
+    <script type="text/javascript">
+        function angleFromCoordinate(lat1,lon1,lat2,lon2) {
+    var p1 = {
+        x: lat1,
+        y: lon1
+    };
+
+    var p2 = {
+        x: lat2,
+        y: lon2
+    };
+    // angle in radians
+    var angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+    // angle in degrees
+    var angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+
+    document.getElementById('rotation').innerHTML ="Rotation : "+ angleDeg;
+    document.getElementById('truck-rotation').style.transform = "rotate(" + angleDeg + "deg)";
+    return angleDeg;
+    
+}
+     //angleFromCoordinate(37.330604,-122.028947,37.3322109,-122.0329665);
+     angleFromCoordinate(18.3083442,105.8859573,18.3021864,105.8920935);
+    </script>
+	
+</body>
+</html>
