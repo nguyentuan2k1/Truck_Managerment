@@ -277,3 +277,30 @@
     height: 16px;
     color: #fff;
 }
+
+@media screen and (max-width: 63.9375em)  { 
+    .cover-map{
+        display: none;
+    }
+    #mapid{
+        display: none;
+    }
+    .cover-map-mobile{
+        display: block;
+    }
+  
+    /* CSS */
+    
+  }
+
+  @media  (min-width: 64em){
+    .cover-map{
+        display: block;
+    }
+    #mapid{
+        display: block;
+    }
+    .cover-map-mobile{
+        display: none;
+    }
+  }

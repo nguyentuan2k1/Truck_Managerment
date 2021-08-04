@@ -3,7 +3,6 @@ var mymap = L.map('mapid').setView([16.0669077, 108.2137987], 6);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGVvdmFubWVveHgiLCJhIjoiY2tyNHRpdW53Mno0MDJ2bzhzZXU2OXZhdSJ9.z9bdsi-GlnxmToSg5njRcA', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    //  zoom:-2,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
@@ -26,9 +25,12 @@ var Truckicon = L.icon({
 });
 var fromToPolyline;
 var polylineisChoose;
-
+var id_truck_clicked = -1;
 
 var array_vehicels_id = [];
+var array_polyline = [];
+var HaveUpdate = false;
+
 
 var url = "https://gps.loglag.com/v2/orders/123456789";
 fetch(url)
@@ -37,6 +39,7 @@ fetch(url)
     })
     .then(function (data) {
         let data_root = data.data;
+
 
         L.Routing.control({
             waypoints: [
@@ -58,7 +61,6 @@ fetch(url)
                 }
             }
         }).addTo(mymap);
-
         //   mymap.fitBounds(polyline.getBounds());
         var order_infomation_data = {
             order_id: data_root.booking_code,
@@ -68,37 +70,44 @@ fetch(url)
             Order_drive: GetDriverFromRootData(data_root)
         }
         Fill_order_infomation_data(order_infomation_data);
-
         createCarFollowData(data_root.vehicles);
-
-
-
-
-
     })
     .catch((error) => {
         alert("Error" + error);
     });
-
+let dem = 0;
 setInterval(() => {
- 
+    dem++;
+    HaveUpdate = true;
+    console.log(dem);
     fetch(url)
         .then(function (data) {
             return data.json();
         })
         .then(function (data) {
-
+          
             let data_root = data.data;
-            document.querySelector('#Order-drive').innerHTML = GetDriverFromRootData(data_root);
-            UpdateData(data_root);
+            
+            console.log(data_root);
+            data_root.vehicles.forEach((element)=>{
+                if(element.vehicle_id == id_truck_clicked){
+                    let array_journey_data = element.status;
+                    Filldata_Journey(array_journey_data);
+                }
+            })
 
+            document.querySelector('#Order-drive').innerHTML = GetDriverFromRootData(data_root);
+           UpdateData(data_root);
+            
+
+           
         })
         .catch((error) => {
             alert("Error" + error);
         });
 
 
-}, 5000);
+}, 10000);
 
 
 
@@ -144,12 +153,6 @@ function Filldata_Journey(array_data) {
 
     }
     parent_list_Journey.innerHTML += '<li class="list-cover-data-Journeys-item" ><span  class="number-stage col-md-1 text-center  " >' + array_data.length + '</span><span  class="Journey-text col-md-11 " >' + array_data[array_data.length - 1].text; + '</span></li>';
-
-
-
-
-
-
 }
 
 
@@ -248,34 +251,42 @@ function GetDriverFromRootData(Rootdata) {
 
 // tạo xe theo dữ liệu
 function createCarFollowData(array_vehicles) {
-
     array_vehicles.forEach((element, i) => {
         // gán vị trí tài xế
         let array_position = [];
+
         element.positions.forEach((obj_position) => {
+
             array_position.push(Object.values(obj_position));
         })
         array_vehicels_id.push(element.vehicle_id);
-        let marker = L.marker([element.positions[0].latitude, element.positions[0].longitude], { icon: Truckicon, vehicle_id: element.vehicle_id })
+        let marker = L.marker([element.positions[(element.positions.length)-1].latitude, element.positions[(element.positions.length)-1].longitude], { icon: Truckicon, vehicle_id: element.vehicle_id })
             .addTo(mymap)
             .bindPopup("Vị trí xe hiện tại:<br>Họ và tên:" + element.driver + "<br> Số xe:" + element.number_plate + "");
-        let polyline = L.polyline(array_position, { color: 'transparent', vehicle_id: element.vehicle_id }).addTo(mymap);
+
+        let polyline = L.polyline(array_position, {  color: 'transparent', vehicle_id: element.vehicle_id }).addTo(mymap);
+        array_polyline.push(polyline);
         marker.addEventListener('preclick', () => {
             if (polylineisChoose != undefined) {
                 polylineisChoose.setStyle({
                     color: 'transparent'
+                    
                 });
             }
         })
         marker.addEventListener(('click'), () => {
+            id_truck_clicked = element.vehicle_id;
             let driver_data = {
                 drive_name: array_vehicles[i].driver,
                 drive_phone: array_vehicles[i].phone_number,
                 dirve_car_number: array_vehicles[i].number_plate
             };
             Fill_dirver_data(driver_data);
-            let array_journey_data = element.status;
-            Filldata_Journey(array_journey_data);
+            if(HaveUpdate == false)
+            {
+                let array_journey_data = element.status;
+                Filldata_Journey(array_journey_data);
+            }
             if (mymap.getZoom() <= 12) {
                 mymap.flyToBounds(polyline.getBounds(), { 'duration': 1.6 });
                 setTimeout(() => {
@@ -300,17 +311,12 @@ function createCarFollowData(array_vehicles) {
                     polyline.setStyle({
                         color: '#d95525'
                     });
-                    fromToPolyline.setStyle({
-                        color: '#d95525'
-                    });
                 }, 700);
             }
             polylineisChoose = polyline;
 
 
         })
-
-
 
     })
 
@@ -326,7 +332,7 @@ function Quayxe(lat1, lon1, lat2, lon2) {
         y: lon2
     };
     // angle in radians
-    var angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+    //    var angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
     // angle in degrees
     var angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
 
@@ -375,45 +381,68 @@ function UpdateData(data_root) {
         }
     }
     let array_update_vehical = data_root.vehicles;
-
+    console.log(data_root);
+    //cập nhật hành trình
+    array_update_vehical.forEach((journey) => {
+        if (journey.vehicle_id == id_truck_clicked) {
+            Filldata_Journey(journey.status);
+        }
+    })
     for (i in mymap._layers) {
-      
-
         if (mymap._layers[i].options.vehicle_id != undefined) {
-            array_update_vehical.forEach((element,index) => {
+            array_update_vehical.forEach((element, index) => {
                 if (element.vehicle_id == mymap._layers[i].options.vehicle_id) {
+
+                    // cập nhật đường path
+                    if (mymap._layers[i]._path != undefined && mymap._layers[i].options.vehicle_id == element.vehicle_id) {
+                        let allDataPos = [];
+
+                        let dataPosGeted = array_update_vehical[index].positions;
+                      //  console.log(dataPosGeted);
+
+                        dataPosGeted.forEach((elements) => {
+                            allDataPos.push(Object.values(elements));
+                        });
+
+
+                        allDataPos.forEach((element_positon) => {
+
+                            mymap._layers[i].addLatLng(element_positon);
+                        })
+                    }
                     // cập nhật vị trí xe 
                     if (mymap._layers[i].options.icon != undefined && mymap._layers[i].options.vehicle_id == element.vehicle_id) {
                         // get old position of that car
                         let oldPositonOfCar = Object.values(mymap._layers[i]._latlng);
                         // get deg
                         let deg = Quayxe(oldPositonOfCar[0], oldPositonOfCar[1], element.positions[element.positions.length - 1].latitude, element.positions[element.positions.length - 1].longitude);
-                         // assign deg for rotate
-                        mymap._layers[i].options.rotationAngle = ''+deg
-                        mymap._layers[i].addEventListener('click',(element)=>{
-                            let array_journey_data = element.status;
-                            Filldata_Journey(array_journey_data);
+                        // assign deg for rotate
+                        mymap._layers[i].setLatLng([element.positions[element.positions.length - 1].latitude, element.positions[element.positions.length - 1].longitude]);
+                        if (deg != 0) {
+                            mymap._layers[i].options.rotationAngle = '' + deg;
+                        }
+                       
+                        mymap._layers[i].addEventListener('click', (vitrixe) => {
+                             if(HaveUpdate == true){
+                                
+                                id_truck_clicked = vitrixe.target.options.vehicle_id;
+                                let array_journey_data = element.status;
+                                  Filldata_Journey(array_journey_data);
+
+                             }
                         })
                     }
-                    // cập nhật đường path
-                    if(mymap._layers[i]._path != undefined && mymap._layers[i].options.vehicle_id == element.vehicle_id) {
-                     let allDataPos = [];
-                    //  let LastPos = Object.values(mymap._layers[i]._latlngs[mymap._layers[i]._latlngs.length-1]);
-                    //     allDataPos.push(LastPos);
-                     let dataPosGeted = array_update_vehical[index].positions;
-                        dataPosGeted.forEach((element)=>{
-                            allDataPos.push(Object.values(element));
-                        });
-                        // có dữ liệu rồi h vẽ getLatLngs()	
-                        mymap._layers[i].addLatLng( mymap._layers[i].getLatLngs(),allDataPos);
-                    }
 
-                   
+
+
                 }
             })
         }
 
 
     }
+
+
+
 
 }
